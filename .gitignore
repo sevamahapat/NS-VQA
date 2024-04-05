@@ -1,0 +1,6 @@
+wheels/
+data/raw/
+data/reason/
+data/CLEVR_v1.0.zip
+scene_parse/mask_rcnn_old/
+__pycache__/
