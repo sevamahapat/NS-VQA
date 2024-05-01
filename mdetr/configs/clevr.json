@@ -1,0 +1,9 @@
+{
+    "combine_datasets": ["clevr"],
+    "combine_datasets_val": ["clevr"],
+    "clevr_img_path": "data/CLEVR_v1.0/images",
+    "clevr_ann_path": "data/clevr_annotations/full",
+    "split_qa_heads": 1,
+    "do_qa": 1,
+    "clevr_variant": "normal"
+}

@@ -1,0 +1,9 @@
+{
+    "combine_datasets": ["clevr"],
+    "combine_datasets_val": ["clevr"],
+    "clevr_img_path": "data/CLEVR_v1.0/images",
+    "clevr_ann_path": "data/clevr_annotations/medium",
+    "clevr_variant": "normal",
+    "num_workers": 4,
+    "num_heads": 16
+}
