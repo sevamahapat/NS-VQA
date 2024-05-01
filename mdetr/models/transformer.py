@@ -14,7 +14,7 @@ from typing import List, Optional
 import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
-from transformers import RobertaModel, RobertaTokenizerFast, AlbertModel, AlbertTokenizerFast 
+from transformers import RobertaModel, RobertaTokenizerFast, AlbertModel, AlbertTokenizerFast
 
 
 class Transformer(nn.Module):
@@ -51,8 +51,16 @@ class Transformer(nn.Module):
 
         self._reset_parameters()
 
-        self.tokenizer = RobertaTokenizerFast.from_pretrained(text_encoder_type)
-        self.text_encoder = RobertaModel.from_pretrained(text_encoder_type)
+        roberta = ["roberta-base", "distilroberta-base", "roberta-large"]
+
+        if text_encoder_type in roberta:
+            self.tokenizer = RobertaTokenizerFast.from_pretrained(text_encoder_type)
+            self.text_encoder = RobertaModel.from_pretrained(text_encoder_type)
+            self.isroberta = True
+        else:
+            self.tokenizer = AlbertTokenizerFast.from_pretrained(text_encoder_type)
+            self.text_encoder = AlbertModel.from_pretrained(text_encoder_type)
+            self.isroberta = False
 
         if freeze_text_encoder:
             for p in self.text_encoder.parameters():
@@ -117,8 +125,12 @@ class Transformer(nn.Module):
             device = src.device
             if isinstance(text[0], str):
                 # Encode the text
-                tokenized = self.tokenizer.batch_encode_plus(text, padding="longest", return_tensors="pt").to(device)
-                encoded_text = self.text_encoder(**tokenized)
+                if self.isroberta:
+                    tokenized = self.tokenizer.batch_encode_plus(text, padding="longest", return_tensors="pt").to(device)
+                    encoded_text = self.text_encoder(**tokenized)
+                else:
+                    tokenized = self.tokenizer(text, padding="longest", return_tensors="pt").to(device)
+                    encoded_text = self.text_encoder(**tokenized)
 
                 # Transpose memory because pytorch's attention expects sequence first
                 text_memory = encoded_text.last_hidden_state.transpose(0, 1)

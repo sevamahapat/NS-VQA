@@ -115,7 +115,7 @@ def get_args_parser():
     parser.add_argument(
         "--text_encoder_type",
         default="roberta-base",
-        choices=("roberta-base", "distilroberta-base", "roberta-large"),
+        choices=("roberta-base", "distilroberta-base", "roberta-large", "albert-base-v2"),
     )
 
     # Backbone
