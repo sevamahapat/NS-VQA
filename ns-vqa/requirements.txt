@@ -1,0 +1,12 @@
+pytorch==1.0
+torchvision==0.2.2
+cython
+matplotlib
+numpy
+scipy
+opencv
+pyyaml
+packaging
+tensorboardx
+h5py
+pycocotools
