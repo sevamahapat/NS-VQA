@@ -244,17 +244,23 @@ If you find this repository useful please give it a star and cite as follows! :)
 ### Run this to pretrain
 
 ```shell
-  nohup python main.py --dataset_config configs/clevr_pretrain_new.json --backbone "resnet18" --num_queries 25 --batch_size 32  --schedule linear_with_warmup --text_encoder_type distilroberta-base --output-dir step1 --epochs 30 --lr_drop 20 --resume /home/ubuntu/mdetr/step1/checkpoint.pth > op.txt
+  nohup python main.py --dataset_config configs/clevr_pretrain_new.json --backbone "resnet18" --num_queries 25 --batch_size 32  --schedule linear_with_warmup --text_encoder_type distilroberta-base --output-dir step1 --epochs 30 --lr_drop 20 --resume /home/ubuntu/mdetr/step1/checkpoint.pth > op.txt 2>&1 &
 ```
 
 ### Run this to train
 
 ```shell
-  nohup python main.py --dataset_config configs/clevr_new.json --backbone "resnet18" --num_queries 25 --batch_size 32  --schedule linear_with_warmup --text_encoder_type distilroberta-base --output-dir step2 --resume /home/ubuntu/mdetr/step2/checkpoint.pth --epochs 30 --lr_drop 20 > op.txt
+  nohup python main.py --dataset_config configs/clevr_new.json --backbone "resnet18" --num_queries 25 --batch_size 32  --schedule linear_with_warmup --text_encoder_type distilroberta-base --output-dir step2 --resume /home/ubuntu/mdetr/step2/checkpoint.pth --epochs 30 --lr_drop 20 > op.txt 2>&1 &
 ```
 
 ### To evaluate all questions
 
 ```shell
-  nohup python scripts/eval_clevr.py --batch_size 32 --dataset_config configs/clevr.json  --resume /home/ubuntu/mdetr/step2/BEST_checkpoint.pth --clevr_eval_path /home/ubuntu/mdetr/data/CLEVR_v1.0/questions --split test > op_eval.txt
+  nohup python scripts/eval_clevr.py --batch_size 32 --dataset_config configs/clevr.json  --resume /home/ubuntu/mdetr/step2/BEST_checkpoint.pth --clevr_eval_path /home/ubuntu/mdetr/data/CLEVR_v1.0/questions --split test > op_eval.txt 2>&1 &
+```
+
+### Run this to train with albert-base-v2 encoder and tokenizer
+
+```shell
+    nohup python main.py --dataset_config configs/clevr_new.json --backbone "resnet18" --num_queries 25 --batch_size 32  --schedule linear_with_warmup --text_encoder_type albert-base-v2 --output-dir step2 --epochs 30 --lr_drop 20 > op.txt 2>&1 &
 ```
